@@ -1,0 +1,7 @@
+{
+  "name": "Datagrid Component",
+  "description": "Component that displays a datagrid",
+  "company": "Zyllio team",
+  "icon": "https://studio.zyllio.com/assets/icon.png",
+  "version": "2.0.0"
+}
