@@ -14,7 +14,21 @@ export const DataGridMetadata: ComponentMetadataModel = {
   category: 'Plugins',
   subCategory: 'Plugins',
   hidden: false,
-  properties: [],
+  properties: [{
+    id: 'selection',
+    name: 'Selection',
+    type: 'row-variable',
+    tootip: '',
+    default: '',
+    write: true
+  }, {
+    id: 'data',
+    name: 'Table',
+    type: 'table',
+    tootip: 'The table being used to populate',
+    default: '',
+    main: true
+  }],
   styles: [
   ]
 }

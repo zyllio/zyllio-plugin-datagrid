@@ -1,7 +1,7 @@
 const path = require('path');
 
 module.exports = {
-  entry: './src/progressbar.component.ts',
+  entry: './src/datagrid.component.ts',
   output: {
     path: path.resolve(__dirname, './dist'),
     filename: 'plugin.js'    

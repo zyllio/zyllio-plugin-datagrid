@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "webpack && copyfiles -f src/plugin.json dist",
+    "build": "webpack && copyfiles -f src/plugin.json src/sample.json dist",
     "tester": "zyllio ./dist plugin.js custom-datagrid"
   },
   "keywords": [],
