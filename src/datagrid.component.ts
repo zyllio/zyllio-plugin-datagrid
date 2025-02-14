@@ -29,7 +29,7 @@ const CssContent = `
 
   td, th { 
     border: 1px solid var(--gray); 
-    padding: 4px;
+    padding: 12px 6px;
     text-align: left;
     width: var(--cell-width); 
   }
@@ -51,6 +51,7 @@ const CssContent = `
   th:first-child { 
     border-left: none;
     width: 50px; 
+    font-size: 0.8em;
   }
 
   th:last-child { 
