@@ -70,6 +70,7 @@ const CssContent = `
     width: var(--cell-width); 
     text-align: left;
     padding: 12px 6px;
+    box-sizing: border-box;
   }
 
   .cell.selected::before {
