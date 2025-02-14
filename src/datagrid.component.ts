@@ -63,7 +63,7 @@ const CssContent = `
     border-left: none;
     color: var(--gray);
     font-size: 0.7em;
-    width: 50px;
+    width: 20px;
   }
 
   .cell {
