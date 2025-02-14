@@ -146,7 +146,7 @@ class DataGridComponent extends HTMLElement {
 
     await this.refresh()
 
-    await this.init()
+    await this.postRefresh()
   }
 
   async refresh() {
@@ -178,20 +178,51 @@ class DataGridComponent extends HTMLElement {
     `
   }
 
-
-  async init() {
+  async postRefresh() {
 
     this.shadow.querySelectorAll('div[data-row]').forEach(cell => {
       cell.addEventListener('click', (event) => {
         this.onCellClick(event)
       })
+
+      cell.addEventListener('keydown', (event: Event) => {
+        this.onCellkeydown(event as KeyboardEvent)
+      })
+
     })
+  }
+
+  onCellkeydown(event: KeyboardEvent) {
+
+    // Empêche le comportement par défaut (ajout d'un <div>)
+    if (event.key === 'Enter') {
+
+      event.preventDefault()
+
+      const br = document.createElement('br')
+
+      const selection = window.getSelection()!
+
+      const range = selection.getRangeAt(0)
+
+      range.deleteContents()
+      range.insertNode(br)
+      range.setStartAfter(br)
+      range.collapse(true)
+
+      selection.removeAllRanges()
+      selection.addRange(range)
+    }
   }
 
   onCellClick(event: Event) {
 
     const cell = event.target as HTMLElement
- console.log("cell ", cell);
+
+    if (cell.classList.contains('selected')) {
+      cell.setAttribute('contenteditable', '')
+      return
+    }
 
     const rowIndex = cell.dataset.row
 
@@ -203,6 +234,7 @@ class DataGridComponent extends HTMLElement {
 
     this.shadow.querySelectorAll('div[data-row]').forEach(cell => {
       cell.classList.remove('selected')
+      cell.removeAttribute('contenteditable')
     })
 
     cell.classList.add('selected')
