@@ -14,7 +14,8 @@ const CssContent = `
     font-family: var(--theme-font-family);
     --gray: #aeaeae;
     --cell-width: 150px;
-    --theme-primary-04:rgb(126, 126, 126);
+    --scrollbar-background: #fff;
+    --scrollbar-foreground: #b1b1b1;
   }
   
   .content {
@@ -29,29 +30,21 @@ const CssContent = `
 
   td, th { 
     border: 1px solid var(--gray); 
-    padding: 12px 6px;
     text-align: left;
     width: var(--cell-width); 
-  }
-
-  .cell {
-    word-wrap: break-word;
-    overflow: hidden; 
-    white-space: nowrap;
-    width: var(--cell-width); 
-    text-align: left;
   }
 
   th {
     border-top: none;
     color: var(--gray);
     font-weight: normal;
+    padding: 12px 6px;
   }
 
   th:first-child { 
     border-left: none;
     width: 50px; 
-    font-size: 0.8em;
+    
   }
 
   th:last-child { 
@@ -66,6 +59,28 @@ const CssContent = `
     text-align: center;
     border-left: none;
     color: var(--gray);
+    font-size: 0.7em;
+  }
+
+  .cell {
+    position: relative;
+    word-wrap: break-word;
+    overflow: hidden; 
+    white-space: nowrap;
+    width: var(--cell-width); 
+    text-align: left;
+    padding: 12px 6px;
+  }
+
+  .cell.selected::before {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    content: '';
+    background-color: var(--theme-secondary-color);
+    opacity: 0.3;
   }
 
 ::-webkit-scrollbar {
@@ -81,18 +96,23 @@ const CssContent = `
 ::-webkit-scrollbar-track {}
 
 ::-webkit-scrollbar-track-piece {
-  background-color: var(--theme-primary-04);
+  background-color: var(--scrollbar-background);
 }
 
 ::-webkit-scrollbar-corner {
-  background-color: var(--theme-primary-04);
+  background-color: var(--scrollbar-background);
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: var(--theme-primary-06);
+  background-color: var(--scrollbar-foreground);
   border-radius: 10px !important;
 }
 `;
+
+type SelectionModel = {
+  row: number,
+  column: number
+} | undefined
 
 
 class DataGridComponent extends HTMLElement {
@@ -105,6 +125,8 @@ class DataGridComponent extends HTMLElement {
 
   data!: ListColumnItemsModel
 
+  selection: SelectionModel
+
   constructor() {
     super();
 
@@ -115,24 +137,17 @@ class DataGridComponent extends HTMLElement {
     this.styleElement = document.createElement('style')
   }
 
-  connectedCallback() {
+  async connectedCallback() {
 
     this.shadow.appendChild(this.styleElement)
     this.shadow.appendChild(this.htmlElement)
 
     this.styleElement.innerHTML = CssContent
 
+    await this.refresh()
 
-    this.refresh()
+    await this.init()
   }
-
-  /*static get observedAttributes() {
-    return ['table']
-  }
-
-  attributeChangedCallback() {
-    this.refresh()
-  }*/
 
   async refresh() {
 
@@ -151,11 +166,11 @@ class DataGridComponent extends HTMLElement {
           <th></th>
           ${columns.map(column => `<th>${column}</th>`).join('')}
         </tr>
-        ${this.data.items.map((item, index) => `
+        ${this.data.items.map((item, rowIndex) => `
           
           <tr>
-            <td>${index + 1}</td>
-            ${columns.map((column) => `<td><div class="cell" >${item[column]}</div></td> `).join('')}
+            <td>${rowIndex + 1}</td>
+            ${columns.map((column, columnIndex) => `<td><div class="cell" data-row="${rowIndex}" data-column="${columnIndex}" >${item[column]}</div></td> `).join('')}
           <tr>
 
         `).join('')}          
@@ -163,9 +178,47 @@ class DataGridComponent extends HTMLElement {
     `
   }
 
+
+  async init() {
+
+    this.shadow.querySelectorAll('div[data-row]').forEach(cell => {
+      cell.addEventListener('click', (event) => {
+        this.onCellClick(event)
+      })
+    })
+  }
+
+  onCellClick(event: Event) {
+
+    const cell = event.target as HTMLElement
+ console.log("cell ", cell);
+
+    const rowIndex = cell.dataset.row
+
+    const columnIndex = cell.dataset.column
+
+    const value = cell.textContent; // Contenu de la cellule
+
+    console.log('Cell clicked:', { rowIndex, columnIndex, value });
+
+    this.shadow.querySelectorAll('div[data-row]').forEach(cell => {
+      cell.classList.remove('selected')
+    })
+
+    cell.classList.add('selected')
+  }
+
   getColumns(): string[] {
     return Object.keys(this.data.items[0]).filter(k => k !== '_id' && k !== '_index')
   }
+
+  /*static get observedAttributes() {
+    return ['table']
+  }
+
+  attributeChangedCallback() {
+    this.refresh()
+  }*/
 }
 
 zySdk.services.registry.registerComponent(DataGridMetadata, DataGridComponent)
