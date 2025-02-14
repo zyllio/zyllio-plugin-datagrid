@@ -65,6 +65,7 @@ const CssContent = `
   td:first-child { 
     text-align: center;
     border-left: none;
+    color: var(--gray);
   }
 
 ::-webkit-scrollbar {
