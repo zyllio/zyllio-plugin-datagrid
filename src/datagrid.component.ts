@@ -11,6 +11,7 @@ const CssContent = `
     width: 100%;
     padding: 10px 10px;
     box-sizing: border-box;
+    font-family: var(--theme-font-family);
     --gray: #aeaeae;
     --cell-width: 150px;
     --theme-primary-04:rgb(126, 126, 126);
