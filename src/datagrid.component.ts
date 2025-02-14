@@ -63,7 +63,7 @@ const CssContent = `
     border-left: none;
     color: var(--gray);
     font-size: 0.7em;
-    width: 20px;
+    width: 30px;
   }
 
   .cell {
@@ -86,6 +86,9 @@ const CssContent = `
     content: '';
     background-color: var(--theme-secondary-color);
     opacity: 0.3;
+  }
+
+  .cell[contenteditable] {    
   }
 
 ::-webkit-scrollbar {
