@@ -28,7 +28,12 @@ const CssContent = `
     table-layout: fixed;
   }
 
-  td, th { 
+  th { 
+    border: 1px solid var(--gray); 
+    text-align: left;    
+  }
+
+  td { 
     border: 1px solid var(--gray); 
     text-align: left;
     width: var(--cell-width); 
@@ -43,8 +48,7 @@ const CssContent = `
 
   th:first-child { 
     border-left: none;
-    width: 50px; 
-    
+    width: 50px;
   }
 
   th:last-child { 
