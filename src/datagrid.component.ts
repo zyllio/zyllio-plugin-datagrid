@@ -48,7 +48,6 @@ const CssContent = `
 
   th:first-child { 
     border-left: none;
-    width: 50px;
   }
 
   th:last-child { 
@@ -64,6 +63,7 @@ const CssContent = `
     border-left: none;
     color: var(--gray);
     font-size: 0.7em;
+    width: 50px;
   }
 
   .cell {
