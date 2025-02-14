@@ -138,7 +138,6 @@ class DataGridComponent extends HTMLElement {
 
   async getHtmlContent(): Promise<string> {
 
-
     console.log("this.data ", this.data);
 
     const columns = this.getColumns()
@@ -162,7 +161,7 @@ class DataGridComponent extends HTMLElement {
   }
 
   getColumns(): string[] {
-    return Object.keys(this.data.items[0]).filter(k => k !== '_id')
+    return Object.keys(this.data.items[0]).filter(k => k !== '_id' && k !== '_index')
   }
 }
 
