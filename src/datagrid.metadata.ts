@@ -28,36 +28,6 @@ export const DataGridMetadata: ComponentMetadataModel = {
     tootip: 'The table being used to populate',
     default: '',
     main: true
-  }, {
-    id: 'column1',
-    name: 'Column 1',
-    type: 'column',
-    tootip: '',
-    default: '',    
-  }, {
-    id: 'column2',
-    name: 'Column 2',
-    type: 'column',
-    tootip: '',
-    default: '',    
-  }, {
-    id: 'column3',
-    name: 'Column 3',
-    type: 'column',
-    tootip: '',
-    default: '',    
-  }, {
-    id: 'column4',
-    name: 'Column 4',
-    type: 'column',
-    tootip: '',
-    default: '',    
-  }, {
-    id: 'column5',
-    name: 'Column 5',
-    type: 'column',
-    tootip: '',
-    default: '',    
   }],
   styles: [
   ]
