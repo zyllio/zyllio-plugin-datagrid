@@ -1,0 +1,149 @@
+ :host {
+   display: block;
+   overflow: hidden;
+   width: 100%;
+   padding: 10px 10px;
+   box-sizing: border-box;
+   font-family: var(--theme-font-family);
+   --gray: #aeaeae; 
+   --cell-width: 150px;
+   --scrollbar-background: #fff;
+   --scrollbar-foreground: #b1b1b1;
+ }
+
+ .content {
+   overflow-x: auto;
+   overflow-y: auto;
+   /* Fixed headers */
+   max-height: 600px;
+   /* Hauteur fixe avec scroll */
+ }
+
+ table {
+   font-size: 16px;
+   border-collapse: collapse;
+   table-layout: fixed;
+ }
+
+ thead {
+   position: sticky;
+   top: 0;
+   background: white;
+   /* Fond blanc pour éviter la superposition */
+   z-index: 10;
+ }
+
+ th {
+   border: 1px solid var(--gray);
+   text-align: left;
+ }
+
+ td {
+   border: 1px solid var(--gray);
+   text-align: left;
+   width: var(--cell-width);
+   /* No overflow for menus */
+ }
+
+ th {
+   border-top: none;
+   color: var(--gray);
+   font-weight: normal;
+   padding: 12px 6px;
+ }
+
+ th:first-child {
+   border-left: none;
+ }
+
+ th:last-child {
+   border-right: none;
+ }
+
+ td:last-child {
+   border-right: none;
+ }
+
+ td:first-child {
+   text-align: center;
+   border-left: none;
+   color: var(--gray);
+   font-size: 0.7em;
+   width: 30px;
+ }
+
+ .cell {
+   position: relative;
+   width: var(--cell-width);
+
+   box-sizing: border-box;
+ }
+
+ .cell.selected {
+   outline: 2px solid var(--theme-secondary-color) !important;
+ }
+
+ .text:focus-visible {
+   outline: none;
+ }
+
+ .menu {
+   position: absolute;
+   display: none;
+   gap: 4px;
+   z-index: 1000;
+   background-color: #ffffff;
+   border-radius: 17px;
+   padding: 4px;
+   box-shadow: 2px 2px 5px #00000059;
+   color: #fff;
+   border: 1px solid #e3e3e3;
+ }
+
+ .cell.selected .menu {
+   display: flex;
+ }
+
+ .option {
+   display: inline-block;
+   padding: 6px 10px;
+   background-color: #9898dc;
+   border-radius: 20px;
+   white-space: nowrap;
+   font-size: 0.9em;
+   cursor: pointer;
+ }
+
+ .text {
+   word-wrap: break-word;
+   overflow: hidden;
+   white-space: nowrap;
+   overflow: hidden;
+   text-align: left;
+   padding: 12px 6px;
+ }
+
+ ::-webkit-scrollbar {
+   -webkit-appearance: none;
+   width: 8px;
+   height: 8px;
+ }
+
+ ::-webkit-scrollbar-button {
+   display: none;
+ }
+
+ ::-webkit-scrollbar-track {}
+
+ ::-webkit-scrollbar-track-piece {
+   background-color: var(--scrollbar-background);
+ }
+
+ ::-webkit-scrollbar-corner {
+   background-color: var(--scrollbar-background);
+ }
+
+ ::-webkit-scrollbar-thumb {
+   background-color: var(--scrollbar-foreground);
+   border-radius: 10px !important;
+ }
