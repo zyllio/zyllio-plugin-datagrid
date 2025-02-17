@@ -46,7 +46,7 @@
       {
         "name": "Status",
         "type": "options-1",
-        "options": "Fruit,Vegetable",
+        "options": "Accepté,Rejeté,En attente",
         "relation": {}
       },
       {

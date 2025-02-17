@@ -1,6 +1,6 @@
 console.log('Plugin Datagrid started')
 
-import { ListColumnItemsModel } from "@zyllio/zy-sdk";
+import { ColumnModel, ListColumnItemsModel } from "@zyllio/zy-sdk";
 import { DataGridMetadata } from "./datagrid.metadata";
 
 import CssContent from './datagrid.component.css';
@@ -61,7 +61,7 @@ class DataGridComponent extends HTMLElement {
       <table>
         <thead><tr>
           <th></th>
-          ${columns.map(column => `<th>${column}</th>`).join('')}
+          ${columns.map(column => `<th>${column.name}</th>`).join('')}
         </tr></thead>
 
         <tbody>
@@ -73,12 +73,11 @@ class DataGridComponent extends HTMLElement {
 
               <td>
                 <div class="cell"  data-row="${rowIndex}" data-column="${columnIndex}" >
-                  <div class="text" contenteditable >${item[column]}</div>
-                  <div class="menu" >
-                    <div class="option" >Accepté</div>
-                    <div class="option" >Rejeté</div>
-                    <div class="option" >En attente</div>
-                  </div>
+                  <div class="text" contenteditable >${item[column.name]}</div>
+                  ${ (column.type === 'options-1' || column.type === 'options-n') ? 
+                    `<div class="menu" >
+                      ${column.options!.split(',').map((option) => `<div class="option" >${option}</div>`) }                      
+                    </div>` : '' }
                 </div>
               </td> 
             
@@ -170,8 +169,9 @@ class DataGridComponent extends HTMLElement {
     cell.classList.add('selected')
   }
 
-  getColumns(): string[] {
-    return Object.keys(this.data.items[0]).filter(k => k !== '_id' && k !== '_index')
+  getColumns(): ColumnModel[] {
+    // return Object.keys(this.data.items[0]).filter(k => k !== '_id' && k !== '_index')
+    return this.data.table.columns.filter(c => c.type !== 'relation-1' && c.type !== 'relation-n')
   }
 }
 
