@@ -21,7 +21,7 @@ const CssContent = `
   .content {
     overflow-x: auto;
     overflow-y: auto; /* Fixed headers */
-    height: 600px; /* Hauteur fixe avec scroll */
+    max-height: 600px; /* Hauteur fixe avec scroll */
   }
 
   table {
