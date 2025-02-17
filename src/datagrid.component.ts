@@ -37,6 +37,7 @@ const CssContent = `
     border: 1px solid var(--gray); 
     text-align: left;
     width: var(--cell-width); 
+    /* No overflow for menus */
   }
 
   th {
@@ -67,54 +68,76 @@ const CssContent = `
   }
 
   .cell {
-    position: relative;
-    word-wrap: break-word;
-    overflow: hidden; 
-    white-space: nowrap;
+    position: relative;    
     width: var(--cell-width); 
-    text-align: left;
-    padding: 12px 6px;
+    
     box-sizing: border-box;
   }
 
-  .cell.selected::before {
+  .cell.selected {
+    outline: 2px solid var(--theme-secondary-color) !important;
+  }
+
+  .cell:focus-visible { 
+    outline: none;   
+  }
+
+  .menu {
     position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    content: '';
-    background-color: var(--theme-secondary-color);
-    opacity: 0.3;
+    display: none;
+    gap: 4px;
+    width: 260px;    
+    z-index: 1000;
+    background-color: #ffffff;
+    border-radius: 12px;
+    padding: 4px;
+    box-shadow: 2px 2px 5px #00000059;
   }
 
-  .cell[contenteditable] {    
+  .cell.selected .menu {    
+    display: flex;
   }
 
-::-webkit-scrollbar {
-  -webkit-appearance: none;
-  width: 8px;
-  height: 8px;
-}
+  .option {  
+    display: inline-block;  
+    padding: 6px;
+    background-color: #9898dc;
+    border-radius: 20px;
+  }
 
-::-webkit-scrollbar-button {
-  display: none;
-}
+  .text {word-wrap: break-word;
+    overflow: hidden; 
+    white-space: nowrap;
+    overflow: hidden; 
+    text-align: left;
+    padding: 12px 6px; 
+  }
 
-::-webkit-scrollbar-track {}
+  ::-webkit-scrollbar {
+    -webkit-appearance: none;
+    width: 8px;
+    height: 8px;
+  }
 
-::-webkit-scrollbar-track-piece {
-  background-color: var(--scrollbar-background);
-}
+  ::-webkit-scrollbar-button {
+    display: none;
+  }
 
-::-webkit-scrollbar-corner {
-  background-color: var(--scrollbar-background);
-}
+  ::-webkit-scrollbar-track {}
 
-::-webkit-scrollbar-thumb {
-  background-color: var(--scrollbar-foreground);
-  border-radius: 10px !important;
-}
+  ::-webkit-scrollbar-track-piece {
+    background-color: var(--scrollbar-background);
+  }
+
+  ::-webkit-scrollbar-corner {
+    background-color: var(--scrollbar-background);
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background-color: var(--scrollbar-foreground);
+    border-radius: 10px !important;
+  }
+
 `;
 
 type SelectionModel = {
@@ -178,7 +201,20 @@ class DataGridComponent extends HTMLElement {
           
           <tr>
             <td>${rowIndex + 1}</td>
-            ${columns.map((column, columnIndex) => `<td><div class="cell" data-row="${rowIndex}" data-column="${columnIndex}" >${item[column]}</div></td> `).join('')}
+            ${columns.map((column, columnIndex) => `
+
+              <td>
+                <div class="cell"  data-row="${rowIndex}" data-column="${columnIndex}" >
+                  <div class="text" contenteditable >${item[column]}</div>
+                  <div class="menu" >
+                    <div class="option" >Accepté</div>
+                    <div class="option" >Rejeté</div>
+                    <div class="option" >En attente</div>
+                  </div>
+                </div>
+              </td> 
+            
+              `).join('')}
           <tr>
 
         `).join('')}          
@@ -225,10 +261,12 @@ class DataGridComponent extends HTMLElement {
 
   onCellClick(event: Event) {
 
-    const cell = event.target as HTMLElement
+    const cell = (event.target as HTMLElement).closest('.cell') as HTMLElement
+
+ console.log("cell ", cell);
 
     if (cell.classList.contains('selected')) {
-      cell.setAttribute('contenteditable', '')
+      // cell.setAttribute('contenteditable', '')
       return
     }
 
@@ -242,7 +280,7 @@ class DataGridComponent extends HTMLElement {
 
     this.shadow.querySelectorAll('div[data-row]').forEach(cell => {
       cell.classList.remove('selected')
-      cell.removeAttribute('contenteditable')
+      // cell.removeAttribute('contenteditable')
     })
 
     cell.classList.add('selected')
