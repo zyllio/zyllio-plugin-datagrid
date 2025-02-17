@@ -107,9 +107,10 @@
  .option {
    display: inline-block;
    padding: 6px 10px;
-   background-color: #9898dc;
+   background-color: #eaeaea;
    border-radius: 20px;
    white-space: nowrap;
+   color: #000;
    font-size: 0.9em;
    cursor: pointer;
  }
