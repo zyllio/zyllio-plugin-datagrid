@@ -20,12 +20,21 @@ const CssContent = `
   
   .content {
     overflow-x: auto;
+    overflow-y: auto; /* Fixed headers */
+    height: 600px; /* Hauteur fixe avec scroll */
   }
 
   table {
     font-size: 16px;
     border-collapse: collapse;
     table-layout: fixed;
+  }
+
+  thead {
+    position: sticky;
+    top: 0;
+    background: white; /* Fond blanc pour éviter la superposition */
+    z-index: 10;
   }
 
   th { 
@@ -195,11 +204,14 @@ class DataGridComponent extends HTMLElement {
     const columns = this.getColumns()
 
     return `
+
       <table>
-        <tr>
+        <thead><tr>
           <th></th>
           ${columns.map(column => `<th>${column}</th>`).join('')}
-        </tr>
+        </tr></thead>
+
+        <tbody>
         ${this.data.items.map((item, rowIndex) => `
           
           <tr>
@@ -220,7 +232,8 @@ class DataGridComponent extends HTMLElement {
               `).join('')}
           <tr>
 
-        `).join('')}          
+        `).join('')} 
+        </tbody>         
       </table>
     `
   }
@@ -248,7 +261,7 @@ class DataGridComponent extends HTMLElement {
   onOptionClick(event: Event) {
 
     event.stopPropagation()
-    
+
     const option = event.target as HTMLElement
 
     const cell = option.closest('.cell')!
