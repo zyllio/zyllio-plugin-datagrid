@@ -78,15 +78,14 @@ const CssContent = `
     outline: 2px solid var(--theme-secondary-color) !important;
   }
 
-  .cell:focus-visible { 
+  .text:focus-visible { 
     outline: none;   
   }
 
   .menu {
     position: absolute;
     display: none;
-    gap: 4px;
-    width: 260px;    
+    gap: 4px;    
     z-index: 1000;
     background-color: #ffffff;
     border-radius: 12px;
@@ -100,9 +99,11 @@ const CssContent = `
 
   .option {  
     display: inline-block;  
-    padding: 6px;
+    padding: 6px 10px;
     background-color: #9898dc;
     border-radius: 20px;
+    white-space: nowrap;    
+    font-size: 0.9em;
   }
 
   .text {word-wrap: break-word;
