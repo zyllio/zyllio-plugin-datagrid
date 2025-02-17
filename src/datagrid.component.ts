@@ -91,6 +91,7 @@ const CssContent = `
     border-radius: 12px;
     padding: 4px;
     box-shadow: 2px 2px 5px #00000059;
+    color: #fff;
   }
 
   .cell.selected .menu {    
