@@ -88,7 +88,7 @@ const CssContent = `
     gap: 4px;    
     z-index: 1000;
     background-color: #ffffff;
-    border-radius: 12px;
+    border-radius: 17px;
     padding: 4px;
     box-shadow: 2px 2px 5px #00000059;
     color: #fff;
@@ -105,6 +105,7 @@ const CssContent = `
     border-radius: 20px;
     white-space: nowrap;    
     font-size: 0.9em;
+    cursor: pointer;
   }
 
   .text {word-wrap: break-word;
@@ -236,6 +237,27 @@ class DataGridComponent extends HTMLElement {
       })
 
     })
+
+    this.shadow.querySelectorAll('.option').forEach(option => {
+      option.addEventListener('click', (event) => {
+        this.onOptionClick(event)
+      })
+    })
+  }
+
+  onOptionClick(event: Event) {
+
+    event.stopPropagation()
+    
+    const option = event.target as HTMLElement
+
+    const cell = option.closest('.cell')!
+
+    const text = cell.querySelector('.text')!
+
+    text.textContent = option.innerText
+
+    cell.classList.remove('selected')
   }
 
   onCellkeydown(event: KeyboardEvent) {
@@ -265,10 +287,7 @@ class DataGridComponent extends HTMLElement {
 
     const cell = (event.target as HTMLElement).closest('.cell') as HTMLElement
 
- console.log("cell ", cell);
-
     if (cell.classList.contains('selected')) {
-      // cell.setAttribute('contenteditable', '')
       return
     }
 
@@ -276,13 +295,10 @@ class DataGridComponent extends HTMLElement {
 
     const columnIndex = cell.dataset.column
 
-    const value = cell.textContent; // Contenu de la cellule
-
-    console.log('Cell clicked:', { rowIndex, columnIndex, value });
+    console.log('Cell clicked:', { rowIndex, columnIndex });
 
     this.shadow.querySelectorAll('div[data-row]').forEach(cell => {
       cell.classList.remove('selected')
-      // cell.removeAttribute('contenteditable')
     })
 
     cell.classList.add('selected')
