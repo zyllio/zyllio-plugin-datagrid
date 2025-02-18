@@ -29,6 +29,12 @@ export const DataGridMetadata: ComponentMetadataModel = {
     default: '',
     main: true
   }, {
+    id: 'filter',
+    name: 'Filter',
+    type: 'filter',
+    tootip: 'Filter the table rows',
+    default: ''
+  }, {
     id: 'update-action',
     name: 'Update action',
     type: 'action',

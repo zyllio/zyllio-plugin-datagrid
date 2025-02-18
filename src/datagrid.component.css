@@ -29,6 +29,7 @@
    position: sticky;
    left: 0;
    display: flex;
+   justify-content: flex-end;
  }
 
  zyllio-sdk-search {
