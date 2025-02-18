@@ -28,6 +28,24 @@ export const DataGridMetadata: ComponentMetadataModel = {
     tootip: 'The table being used to populate',
     default: '',
     main: true
+  }, {
+    id: 'update-action',
+    name: 'Update action',
+    type: 'action',
+    tootip: '',
+    default: ''
+  }, {
+    id: 'create-action',
+    name: 'Create action',
+    type: 'action',
+    tootip: '',
+    default: ''
+  }, {
+    id: 'delete-action',
+    name: 'Delete action',
+    type: 'action',
+    tootip: '',
+    default: ''
   }],
   styles: [
   ]

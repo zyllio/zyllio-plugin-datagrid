@@ -58,6 +58,10 @@ class DataGridComponent extends HTMLElement {
 
     return `
 
+      <div class="header">        
+        <zyllio-sdk-search></zyllio-sdk-search>
+      </div>
+
       <table>
         <thead><tr>
           <th></th>

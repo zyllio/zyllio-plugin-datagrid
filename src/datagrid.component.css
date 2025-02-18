@@ -1,11 +1,13 @@
  :host {
-   display: block;
+   display: flex;
+   flex-direction: column;
+   gap: 4px;
    overflow: hidden;
    width: 100%;
    padding: 10px 10px;
    box-sizing: border-box;
    font-family: var(--theme-font-family);
-   --gray: #8d8d8d; 
+   --gray: #8d8d8d;
    --cell-width: 150px;
    --scrollbar-background: #fff;
    --scrollbar-foreground: #b1b1b1;
@@ -15,8 +17,20 @@
    overflow-x: auto;
    overflow-y: auto;
    /* Fixed headers */
-   max-height: 600px;
+   /* max-height: 600px; */
    /* Hauteur fixe avec scroll */
+   display: flex;
+   flex-direction: column;
+   gap: 10px;
+ }
+
+ .header {
+   display: flex;
+ }
+
+ zyllio-sdk-search {
+  width: 100%;
+  max-width: 420px;
  }
 
  table {
