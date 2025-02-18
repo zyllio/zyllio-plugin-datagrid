@@ -113,6 +113,7 @@ class DataGridComponent extends HTMLElement {
   async postRefresh() {
 
     this.shadow.querySelectorAll('div[data-row]').forEach(cell => {
+
       cell.addEventListener('click', (event) => {
         this.onCellClick(event)
       })
@@ -121,6 +122,9 @@ class DataGridComponent extends HTMLElement {
         this.onCellkeydown(event as KeyboardEvent)
       })
 
+      cell.addEventListener('blur', (event: Event) => {
+        this.onBlurClick(event)
+      })
     })
 
     this.shadow.querySelectorAll('.option').forEach(option => {
@@ -138,11 +142,9 @@ class DataGridComponent extends HTMLElement {
 
     this.shadow.querySelector<HTMLElement>('.button')!.onclick = () => {
 
-      const customEvent = new CustomEvent('trigger-action', {
+      this.dispatchEvent(new CustomEvent('trigger-action', {
         detail: { action: 'create-action' }
-      })
-
-      this.dispatchEvent(customEvent)
+      }))
     }
   }
 
@@ -157,6 +159,10 @@ class DataGridComponent extends HTMLElement {
     const text = cell.querySelector('.text')!
 
     text.textContent = option.innerText
+
+    this.dispatchEvent(new CustomEvent('trigger-action', {
+      detail: { action: 'update-action' }
+    }))
 
     cell.classList.remove('selected')
   }
@@ -184,6 +190,12 @@ class DataGridComponent extends HTMLElement {
     }
   }
 
+  onBlurClick(event: Event) {
+    this.dispatchEvent(new CustomEvent('trigger-action', {
+      detail: { action: 'update-action' }
+    }))
+  }
+
   onCellClick(event: Event) {
 
     const cell = (event.target as HTMLElement).closest('.cell') as HTMLElement
@@ -204,11 +216,9 @@ class DataGridComponent extends HTMLElement {
 
     cell.classList.add('selected')
 
-    const customEvent = new CustomEvent('selected', {
+    this.dispatchEvent(new CustomEvent('selected', {
       detail: { selection: this.data.items[0] }
-    })
-
-    this.dispatchEvent(customEvent)    
+    }))
   }
 
   getColumns(): ColumnModel[] {
