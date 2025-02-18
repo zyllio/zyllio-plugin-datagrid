@@ -19,7 +19,14 @@ class DataGridComponent extends HTMLElement {
 
   styleElement: HTMLElement
 
-  data!: ListColumnItemsModel
+  _data!: ListColumnItemsModel
+
+  set data(data: ListColumnItemsModel) {
+
+    this._data = data
+
+    this.refresh()
+  }
 
   selection: SelectionModel
 
@@ -54,15 +61,13 @@ class DataGridComponent extends HTMLElement {
 
   getFilteredData(): ListColumnItemModel[] {
 
-    const result = this.data.items
+    const result = this._data.items
       .filter(item => Object.values(item).some(value => value.toLowerCase().includes(this.search.toLowerCase())))
 
     return result
   }
 
   async getHtmlContent(): Promise<string> {
-
-    console.log("this.data ", this.data);
 
     const columns = this.getColumns()
 
@@ -144,6 +149,10 @@ class DataGridComponent extends HTMLElement {
       this.dispatchEvent(new CustomEvent('trigger-action', {
         detail: { action: 'create-action' }
       }))
+
+      setTimeout( () => {
+        this.dispatchEvent(new CustomEvent('refresh-data'))
+      }, 1000)
     }
   }
 
@@ -221,7 +230,7 @@ class DataGridComponent extends HTMLElement {
   }
 
   getColumns(): ColumnModel[] {
-    return this.data.table.columns.filter(c => c.type !== 'relation-1' && c.type !== 'relation-n')
+    return this._data.table.columns.filter(c => c.type !== 'relation-1' && c.type !== 'relation-n')
   }
 }
 
