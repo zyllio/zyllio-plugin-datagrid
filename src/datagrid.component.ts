@@ -94,7 +94,7 @@ class DataGridComponent extends HTMLElement {
             ${columns.map((column, columnIndex) => `
 
               <td>
-                <div class="cell"  data-row="${rowIndex}" data-column="${columnIndex}" >
+                <div class="cell"  data-row="${rowIndex}" data-id="${item._id}" data-column-name="${column.name}" data-column="${columnIndex}" >
                   <div class="text" contenteditable >${item[column.name]}</div>
                   ${(column.type === 'options-1' || column.type === 'options-n') ?
         `<div class="menu" >
@@ -224,9 +224,9 @@ class DataGridComponent extends HTMLElement {
 
     cell.classList.add('selected')
 
-    this.dispatchEvent(new CustomEvent('selected', {
-      detail: { selection: this._data.items[0] }
-    }))
+    const selection = this._data.items.find(i => i._id === cell.dataset.id)  
+
+    this.dispatchEvent(new CustomEvent('selected', { detail: { selection } }))
   }
 
   getColumns(): ColumnModel[] {
