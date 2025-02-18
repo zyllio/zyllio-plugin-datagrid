@@ -1,6 +1,6 @@
 console.log('Plugin Datagrid started')
 
-import { ColumnModel, ListColumnItemsModel } from "@zyllio/zy-sdk";
+import { ColumnModel, ListColumnItemModel, ListColumnItemsModel } from "@zyllio/zy-sdk";
 import { DataGridMetadata } from "./datagrid.metadata";
 
 import CssContent from './datagrid.component.css';
@@ -23,6 +23,8 @@ class DataGridComponent extends HTMLElement {
 
   selection: SelectionModel
 
+  search = ''
+
   constructor() {
     super();
 
@@ -41,13 +43,22 @@ class DataGridComponent extends HTMLElement {
     this.styleElement.innerHTML = CssContent
 
     await this.refresh()
+  }
+
+  async refresh() {
+    console.log("refresh ",);
+
+    this.htmlElement.innerHTML = await this.getHtmlContent()
 
     await this.postRefresh()
   }
 
-  async refresh() {
+  getFilteredData(): ListColumnItemModel[] {
 
-    this.htmlElement.innerHTML = await this.getHtmlContent()
+    const result = this.data.items
+      .filter(item => Object.values(item).some(value => value.toLowerCase().includes(this.search.toLowerCase())))
+
+    return result
   }
 
   async getHtmlContent(): Promise<string> {
@@ -56,10 +67,12 @@ class DataGridComponent extends HTMLElement {
 
     const columns = this.getColumns()
 
+    const filteredData = this.getFilteredData()
+
     return `
 
       <div class="header">        
-        <zyllio-sdk-search></zyllio-sdk-search>
+        <zyllio-sdk-search value="${this.search}" ></zyllio-sdk-search>
       </div>
 
       <table>
@@ -69,7 +82,7 @@ class DataGridComponent extends HTMLElement {
         </tr></thead>
 
         <tbody>
-        ${this.data.items.map((item, rowIndex) => `
+        ${filteredData.map((item, rowIndex) => `
           
           <tr>
             <td>${rowIndex + 1}</td>
@@ -78,10 +91,10 @@ class DataGridComponent extends HTMLElement {
               <td>
                 <div class="cell"  data-row="${rowIndex}" data-column="${columnIndex}" >
                   <div class="text" contenteditable >${item[column.name]}</div>
-                  ${ (column.type === 'options-1' || column.type === 'options-n') ? 
-                    `<div class="menu" >
-                      ${column.options!.split(',').map((option) => `<div class="option" >${option}</div>`) }                      
-                    </div>` : '' }
+                  ${(column.type === 'options-1' || column.type === 'options-n') ?
+        `<div class="menu" >
+                      ${column.options!.split(',').map((option) => `<div class="option" >${option}</div>`)}                      
+                    </div>` : ''}
                 </div>
               </td> 
             
@@ -112,6 +125,13 @@ class DataGridComponent extends HTMLElement {
         this.onOptionClick(event)
       })
     })
+
+    this.shadow.querySelector<HTMLElement>('zyllio-sdk-search')!.onblur = () => {
+
+      this.search = this.shadow.querySelector<HTMLInputElement>('zyllio-sdk-search')!.value
+
+      this.refresh()
+    }
   }
 
   onOptionClick(event: Event) {
@@ -174,7 +194,6 @@ class DataGridComponent extends HTMLElement {
   }
 
   getColumns(): ColumnModel[] {
-    // return Object.keys(this.data.items[0]).filter(k => k !== '_id' && k !== '_index')
     return this.data.table.columns.filter(c => c.type !== 'relation-1' && c.type !== 'relation-n')
   }
 }
