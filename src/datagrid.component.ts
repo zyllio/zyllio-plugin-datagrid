@@ -46,7 +46,6 @@ class DataGridComponent extends HTMLElement {
   }
 
   async refresh() {
-    console.log("refresh ",);
 
     this.htmlElement.innerHTML = await this.getHtmlContent()
 
@@ -71,14 +70,14 @@ class DataGridComponent extends HTMLElement {
 
     return `
 
-      <div class="header">        
+      <div class="toolbar">        
         <zyllio-sdk-search value="${this.search}" ></zyllio-sdk-search>
       </div>
 
       <table>
         <thead><tr>
-          <th></th>
-          ${columns.map(column => `<th>${column.name}</th>`).join('')}
+          <th><div class="header" ></div></th></th>
+          ${columns.map(column => `<th><div class="header" >${column.name}</div></th>`).join('')}
         </tr></thead>
 
         <tbody>
@@ -102,8 +101,12 @@ class DataGridComponent extends HTMLElement {
           <tr>
 
         `).join('')} 
+
+        ${ (filteredData.length === 0) ? `<tr><td></td><td colspan="100" class="no-data" ><div>Aucune donnée disponible</div></td></tr>`: '' }
         </tbody>         
       </table>
+
+      
     `
   }
 

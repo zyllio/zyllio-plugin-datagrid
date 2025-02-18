@@ -25,13 +25,13 @@
    gap: 10px;
  }
 
- .header {
+ .toolbar {
    display: flex;
  }
 
  zyllio-sdk-search {
-  width: 100%;
-  max-width: 420px;
+   width: 100%;
+   max-width: 420px;
  }
 
  table {
@@ -50,6 +50,14 @@
 
  th {
    border: 1px solid var(--gray);
+   border-top: none;
+ }
+
+ .header {
+   width: var(--cell-width);
+   color: var(--gray);
+   font-weight: normal;
+   padding: 12px 6px;
    text-align: left;
  }
 
@@ -60,15 +68,12 @@
    /* No overflow for menus */
  }
 
- th {
-   border-top: none;
-   color: var(--gray);
-   font-weight: normal;
-   padding: 12px 6px;
- }
-
  th:first-child {
    border-left: none;
+ }
+
+ th:first-child .header {
+   width: 30px;
  }
 
  th:last-child {
@@ -90,7 +95,6 @@
  .cell {
    position: relative;
    width: var(--cell-width);
-
    box-sizing: border-box;
  }
 
@@ -137,6 +141,10 @@
    overflow: hidden;
    text-align: left;
    padding: 12px 6px;
+ }
+
+ .no-data {
+   padding: 10px;
  }
 
  ::-webkit-scrollbar {
