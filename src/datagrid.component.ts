@@ -105,8 +105,8 @@ class DataGridComponent extends HTMLElement {
         ${ (filteredData.length === 0) ? `<tr><td></td><td colspan="100" class="no-data" ><div>Aucune donnée disponible</div></td></tr>`: '' }
         </tbody>         
       </table>
-
       
+      <div class="button" >Ajouter</div>
     `
   }
 
@@ -134,6 +134,16 @@ class DataGridComponent extends HTMLElement {
       this.search = this.shadow.querySelector<HTMLInputElement>('zyllio-sdk-search')!.value
 
       this.refresh()
+    }
+
+    this.shadow.querySelector<HTMLElement>('.button')!.onclick = () => {
+ console.log("onclick ", onclick);
+
+      const customEvent = new CustomEvent('trigger-action', {
+        detail: { action: 'update-action' }
+      })
+
+      this.dispatchEvent(customEvent)      
     }
   }
 
