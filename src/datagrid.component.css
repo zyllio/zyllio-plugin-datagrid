@@ -30,12 +30,14 @@
    left: 0;
    display: flex;
    justify-content: flex-end;
+   align-items: center;
    gap: 10px;
  }
 
  zyllio-sdk-search {
    width: 100%;
    max-width: 420px;
+   height: 39px;
  }
 
  table {
