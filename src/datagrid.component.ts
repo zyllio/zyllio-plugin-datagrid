@@ -72,6 +72,7 @@ class DataGridComponent extends HTMLElement {
 
       <div class="toolbar">        
         <zyllio-sdk-search value="${this.search}" ></zyllio-sdk-search>
+        <div class="button" >Ajouter</div>
       </div>
 
       <table>
@@ -102,11 +103,9 @@ class DataGridComponent extends HTMLElement {
 
         `).join('')} 
 
-        ${ (filteredData.length === 0) ? `<tr><td></td><td colspan="100" class="no-data" ><div>Aucune donnée disponible</div></td></tr>`: '' }
+        ${(filteredData.length === 0) ? `<tr><td></td><td colspan="100" class="no-data" ><div>Aucune donnée disponible</div></td></tr>` : ''}
         </tbody>         
       </table>
-      
-      <div class="button" >Ajouter</div>
     `
   }
 
