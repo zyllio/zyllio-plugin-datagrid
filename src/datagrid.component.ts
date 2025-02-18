@@ -225,7 +225,7 @@ class DataGridComponent extends HTMLElement {
     cell.classList.add('selected')
 
     this.dispatchEvent(new CustomEvent('selected', {
-      detail: { selection: this.data.items[0] }
+      detail: { selection: this._data.items[0] }
     }))
   }
 
