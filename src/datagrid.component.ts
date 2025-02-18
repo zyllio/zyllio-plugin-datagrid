@@ -137,13 +137,12 @@ class DataGridComponent extends HTMLElement {
     }
 
     this.shadow.querySelector<HTMLElement>('.button')!.onclick = () => {
- console.log("onclick ", onclick);
 
       const customEvent = new CustomEvent('trigger-action', {
-        detail: { action: 'update-action' }
+        detail: { action: 'create-action' }
       })
 
-      this.dispatchEvent(customEvent)      
+      this.dispatchEvent(customEvent)
     }
   }
 
@@ -204,6 +203,12 @@ class DataGridComponent extends HTMLElement {
     })
 
     cell.classList.add('selected')
+
+    const customEvent = new CustomEvent('selected', {
+      detail: { selection: this.data.items[0] }
+    })
+
+    this.dispatchEvent(customEvent)    
   }
 
   getColumns(): ColumnModel[] {
