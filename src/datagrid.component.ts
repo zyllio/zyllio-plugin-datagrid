@@ -22,10 +22,11 @@ class DataGridComponent extends HTMLElement {
   _data!: ListColumnItemsModel
 
   set data(data: ListColumnItemsModel) {
+ console.log("set data ", );
 
     this._data = data
 
-    this.refresh()
+    // this.refresh()
   }
 
   selection: SelectionModel
@@ -56,7 +57,9 @@ class DataGridComponent extends HTMLElement {
 
     this.htmlElement.innerHTML = await this.getHtmlContent()
 
-    await this.postRefresh()
+    setTimeout(() => {
+      this.postRefresh()      
+    })
   }
 
   getFilteredData(): ListColumnItemModel[] {
