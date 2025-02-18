@@ -26,6 +26,8 @@
  }
 
  .toolbar {
+   position: sticky;
+   left: 0;
    display: flex;
  }
 
