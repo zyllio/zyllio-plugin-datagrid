@@ -5,6 +5,10 @@ import { DataGridMetadata } from "./datagrid.metadata";
 
 import CssContent from './datagrid.component.css';
 
+const PlusIcon = `
+  <svg class="button" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="currentColor" d="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z" /></svg>
+`
+
 type SelectionModel = {
   row: number,
   column: number
@@ -22,7 +26,7 @@ class DataGridComponent extends HTMLElement {
   _data!: ListColumnItemsModel
 
   set data(data: ListColumnItemsModel) {
- console.log("set data ", );
+    console.log("set data ",);
 
     this._data = data
 
@@ -58,7 +62,7 @@ class DataGridComponent extends HTMLElement {
     this.htmlElement.innerHTML = await this.getHtmlContent()
 
     setTimeout(() => {
-      this.postRefresh()      
+      this.postRefresh()
     })
   }
 
@@ -80,7 +84,7 @@ class DataGridComponent extends HTMLElement {
 
       <div class="toolbar">        
         <zyllio-sdk-search value="${this.search}" ></zyllio-sdk-search>
-        <div class="button" >Ajouter</div>
+        ${PlusIcon}
       </div>
 
       <table>
@@ -97,10 +101,9 @@ class DataGridComponent extends HTMLElement {
             ${columns.map((column, columnIndex) => `
 
               <td>
-                <div class="cell"  data-row="${rowIndex}" data-id="${item._id}" data-column-name="${column.name}" data-column="${columnIndex}" >
-                  <div class="text" contenteditable >${item[column.name]}</div>
-                  ${(column.type === 'options-1' || column.type === 'options-n') ?
-        `<div class="menu" >
+                <div class="cell" data-row="${rowIndex}" data-id="${item._id}" data-column-name="${column.name}" data-column="${columnIndex}" >
+                  <div class="text" ${!this.isOptionsColumn(column) ? 'contenteditable' : ''} >${item[column.name]}</div>
+                  ${(this.isOptionsColumn(column)) ? `<div class="menu" >
                       ${column.options!.split(',').map((option) => `<div class="option" >${option}</div>`)}                      
                     </div>` : ''}
                 </div>
@@ -115,6 +118,10 @@ class DataGridComponent extends HTMLElement {
         </tbody>         
       </table>
     `
+  }
+
+  isOptionsColumn(column: ColumnModel) {
+    return column.type === 'options-1' || column.type === 'options-n'
   }
 
   async postRefresh() {
@@ -153,7 +160,7 @@ class DataGridComponent extends HTMLElement {
         detail: { action: 'create-action' }
       }))
 
-      setTimeout( () => {
+      setTimeout(() => {
         this.dispatchEvent(new CustomEvent('refresh-data'))
       }, 1000)
     }
@@ -227,7 +234,7 @@ class DataGridComponent extends HTMLElement {
 
     cell.classList.add('selected')
 
-    const selection = this._data.items.find(i => i._id === cell.dataset.id)  
+    const selection = this._data.items.find(i => i._id === cell.dataset.id)
 
     // this.dispatchEvent(new CustomEvent('selected', { detail: { selection } }))
   }
