@@ -130,6 +130,9 @@ class DataGridComponent extends HTMLElement {
       cell.addEventListener('click', (event) => {
         this.onCellClick(event)
       })
+    })
+
+    this.shadow.querySelectorAll('div[data-row] .text').forEach(cell => {
 
       cell.addEventListener('keydown', (event: Event) => {
         this.onCellkeydown(event as KeyboardEvent)
@@ -208,6 +211,9 @@ class DataGridComponent extends HTMLElement {
   }
 
   onBlurClick(event: Event) {
+    console.log("onBlurClick ", event);
+
+
     this.dispatchEvent(new CustomEvent('trigger-action', {
       detail: { action: 'update-action' }
     }))
