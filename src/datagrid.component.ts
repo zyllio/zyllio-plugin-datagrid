@@ -30,7 +30,7 @@ class DataGridComponent extends HTMLElement {
 
     this._data = data
 
-    this.refresh()
+    // this.refresh()
   }
 
   selection: SelectionModel

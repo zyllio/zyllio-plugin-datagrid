@@ -40,7 +40,7 @@ export const DataGridMetadata: ComponentMetadataModel = {
     type: 'action',
     tootip: '',
     default: ''
-  }, {
+  }/*, {
     id: 'create-action',
     name: 'Create action',
     type: 'action',
@@ -52,7 +52,7 @@ export const DataGridMetadata: ComponentMetadataModel = {
     type: 'action',
     tootip: '',
     default: ''
-  }],
+  }*/],
   styles: [
   ]
 }
