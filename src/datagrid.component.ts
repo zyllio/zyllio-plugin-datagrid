@@ -9,12 +9,6 @@ const PlusIcon = `
   <svg class="button" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="currentColor" d="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z" /></svg>
 `
 
-type SelectionModel = {
-  row: number,
-  column: number
-} | undefined
-
-
 class DataGridComponent extends HTMLElement {
 
   shadow: ShadowRoot
@@ -25,15 +19,19 @@ class DataGridComponent extends HTMLElement {
 
   _data!: ListColumnItemsModel
 
+  _selection!: ListColumnItemModel
+
   set data(data: ListColumnItemsModel) {
-    console.log("set data ",);
+    console.log("set data ", data);
 
     this._data = data
-
-    // this.refresh()
   }
 
-  selection: SelectionModel
+  set selection(selection: ListColumnItemModel) {
+    console.log("set selection ", selection);
+
+    this._selection = selection
+  }
 
   search = ''
 
@@ -117,9 +115,7 @@ class DataGridComponent extends HTMLElement {
         </tbody>         
       </table>
 
-      <!-- ${PlusIcon}  -->
-
-      
+      <!-- ${PlusIcon}  -->      
     `
   }
 
