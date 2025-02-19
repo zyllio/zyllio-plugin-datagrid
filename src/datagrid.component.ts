@@ -211,7 +211,19 @@ class DataGridComponent extends HTMLElement {
   }
 
   onBlurClick(event: Event) {
-    console.log("onBlurClick ", event);
+
+    const cell = (event.target as HTMLElement).closest('.cell') as HTMLElement
+
+    const value = (event.target as HTMLElement).innerText
+
+    const columnName = cell.dataset.columnName!
+
+    this._selection[columnName] = value
+
+    console.log("onBlurClick updated ", this._selection);
+
+    // should be update ??
+    this.dispatchEvent(new CustomEvent('selected', { detail: { selection: this._selection } }))
 
 
     this.dispatchEvent(new CustomEvent('trigger-action', {
