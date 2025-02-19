@@ -170,25 +170,6 @@ class DataGridComponent extends HTMLElement {
     }*/
   }
 
-  onOptionClick(event: Event) {
-
-    event.stopPropagation()
-
-    const option = event.target as HTMLElement
-
-    const cell = option.closest('.cell')!
-
-    const text = cell.querySelector('.text')!
-
-    text.textContent = option.innerText
-
-    this.dispatchEvent(new CustomEvent('trigger-action', {
-      detail: { action: 'update-action' }
-    }))
-
-    cell.classList.remove('selected')
-  }
-
   onCellkeydown(event: KeyboardEvent) {
 
     // Empêche le comportement par défaut (ajout d'un <div>)
@@ -212,6 +193,31 @@ class DataGridComponent extends HTMLElement {
     }
   }
 
+  onOptionClick(event: Event) {
+
+    event.stopPropagation()
+
+    const option = event.target as HTMLElement
+
+    const cell = option.closest('.cell') as HTMLElement
+
+    const value = option.innerText
+
+    const columnName = cell.dataset.columnName!
+
+    this._selection[columnName] = value
+    
+    cell.querySelector('.text')!.textContent = value
+
+    this.dispatchEvent(new CustomEvent('selected', { detail: { selection: this._selection } }))
+
+    this.dispatchEvent(new CustomEvent('trigger-action', {
+      detail: { action: 'update-action' }
+    }))
+
+    cell.classList.remove('selected')
+  }
+
   onBlurClick(event: Event) {
 
     const cell = (event.target as HTMLElement).closest('.cell') as HTMLElement
@@ -224,11 +230,11 @@ class DataGridComponent extends HTMLElement {
 
     console.log("onBlurClick updated ", this._selection);
 
+    this.dispatchEvent(new CustomEvent('selected', { detail: { selection: this._selection } }))
+
     this.dispatchEvent(new CustomEvent('trigger-action', {
       detail: { action: 'update-action' }
     }))
-
-    this.dispatchEvent(new CustomEvent('selected', { detail: { selection: this._selection } }))
   }
 
   onCellClick(event: Event) {
