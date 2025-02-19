@@ -154,9 +154,10 @@ td:first-child {
   padding: 10px;
 }
 
-/*.button {
+.button {
   position: sticky;
   bottom: 0;
+  left: 0;
   display: inline-flex;
   width: 39px;
   height: 39px;
@@ -165,9 +166,10 @@ td:first-child {
   color: var(--theme-secondary-text-color);
   border-radius: 10px;  
   align-items: center;
-  justify-content: center;  
+  justify-content: center;
   cursor: pointer;
-}*/
+  margin-top: auto;
+}
 
 ::-webkit-scrollbar {
   -webkit-appearance: none;

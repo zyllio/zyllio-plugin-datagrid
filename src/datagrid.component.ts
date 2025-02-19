@@ -5,9 +5,9 @@ import { DataGridMetadata } from "./datagrid.metadata";
 
 import CssContent from './datagrid.component.css';
 
-/*const PlusIcon = `
+const PlusIcon = `
   <svg class="button" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="currentColor" d="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z" /></svg>
-`*/
+`
 
 type SelectionModel = {
   row: number,
@@ -86,8 +86,6 @@ class DataGridComponent extends HTMLElement {
         <zyllio-sdk-search value="${this.search}" ></zyllio-sdk-search>
       </div>
 
-      
-
       <table>
         <thead><tr>
           <th><div class="header" ></div></th></th>
@@ -118,6 +116,10 @@ class DataGridComponent extends HTMLElement {
         ${(filteredData.length === 0) ? `<tr><td></td><td colspan="100" class="no-data" ><div>Aucune donnée disponible</div></td></tr>` : ''}
         </tbody>         
       </table>
+
+      <!-- ${PlusIcon}  -->
+
+      
     `
   }
 
