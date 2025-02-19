@@ -24,7 +24,9 @@ class DataGridComponent extends HTMLElement {
   set data(data: ListColumnItemsModel) {
     console.log("set data ", data);
 
-    this._data = data
+    if (this._data === undefined) {
+      this._data = data
+    }
   }
 
   set selection(selection: ListColumnItemModel) {
