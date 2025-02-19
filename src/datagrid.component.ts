@@ -5,9 +5,9 @@ import { DataGridMetadata } from "./datagrid.metadata";
 
 import CssContent from './datagrid.component.css';
 
-const PlusIcon = `
+/*const PlusIcon = `
   <svg class="button" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="currentColor" d="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z" /></svg>
-`
+`*/
 
 type SelectionModel = {
   row: number,
@@ -84,8 +84,9 @@ class DataGridComponent extends HTMLElement {
 
       <div class="toolbar">        
         <zyllio-sdk-search value="${this.search}" ></zyllio-sdk-search>
-        ${PlusIcon}
       </div>
+
+      
 
       <table>
         <thead><tr>
@@ -154,7 +155,7 @@ class DataGridComponent extends HTMLElement {
       this.refresh()
     }
 
-    this.shadow.querySelector<HTMLElement>('.button')!.onclick = () => {
+    /*this.shadow.querySelector<HTMLElement>('.button')!.onclick = () => {
 
       this.dispatchEvent(new CustomEvent('trigger-action', {
         detail: { action: 'create-action' }
@@ -163,7 +164,7 @@ class DataGridComponent extends HTMLElement {
       setTimeout(() => {
         this.dispatchEvent(new CustomEvent('refresh-data'))
       }, 1000)
-    }
+    }*/
   }
 
   onOptionClick(event: Event) {
