@@ -239,7 +239,7 @@ class DataGridComponent extends HTMLElement {
 
     const selection = this._data.items.find(i => i._id === cell.dataset.id)
 
-    // this.dispatchEvent(new CustomEvent('selected', { detail: { selection } }))
+    this.dispatchEvent(new CustomEvent('selected', { detail: { selection } }))
   }
 
   getColumns(): ColumnModel[] {
