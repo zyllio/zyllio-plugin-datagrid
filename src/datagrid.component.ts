@@ -1,4 +1,4 @@
-console.log('Plugin Datagrid started 4')
+console.log('Plugin Datagrid started 5')
 
 import { ColumnModel, ListColumnItemModel, ListColumnItemsModel } from "@zyllio/zy-sdk";
 import { DataGridMetadata } from "./datagrid.metadata";
@@ -25,7 +25,11 @@ class DataGridComponent extends HTMLElement {
     console.log("set data ", data);
 
     // if (this._data === undefined) {
+
+    setTimeout(() => {
       this._data = data
+      
+    }, 1000);
     // }
   }
 
