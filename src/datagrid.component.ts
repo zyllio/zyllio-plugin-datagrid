@@ -241,6 +241,8 @@ class DataGridComponent extends HTMLElement {
     console.log("Updating (from onblur)... ", row);
 
     this.triggerUpdate(row)
+
+    cell.classList.remove('selected')
   }
 
   triggerUpdate(row: ListColumnItemModel) {
