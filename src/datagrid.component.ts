@@ -1,4 +1,4 @@
-console.log('Plugin Datagrid started')
+console.log('Plugin Datagrid started 2')
 
 import { ColumnModel, ListColumnItemModel, ListColumnItemsModel } from "@zyllio/zy-sdk";
 import { DataGridMetadata } from "./datagrid.metadata";
