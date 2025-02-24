@@ -131,8 +131,10 @@ class DataGridComponent extends HTMLElement {
 
       cell.addEventListener('click', (event) => {
         // Delay to give a chance to unblur to select / update
+        const cell = (event.target as HTMLElement).closest('.cell') as HTMLElement
+
         setTimeout( () => {
-          this.onCellClick(event)
+          this.onCellClick(cell)
         })
       })
     })
@@ -246,10 +248,10 @@ class DataGridComponent extends HTMLElement {
     }))
   }
 
-  onCellClick(event: Event) {
+  onCellClick(cell: HTMLElement) {
 
-    const cell = (event.target as HTMLElement).closest('.cell') as HTMLElement
- console.log("cell ", cell);
+    // const cell = (event.target as HTMLElement).closest('.cell') as HTMLElement
+//  console.log("cell ", cell);
 
     if (cell.classList.contains('selected')) {
       return
