@@ -130,12 +130,10 @@ class DataGridComponent extends HTMLElement {
     this.shadow.querySelectorAll('div[data-row]').forEach(cell => {
 
       cell.addEventListener('click', (event) => {
-//  console.log("event ", event);
         // Delay to give a chance to unblur to select / update
-        // const cell = (event.target as HTMLElement).closest('.cell') as HTMLElement
 
         // setTimeout( () => {
-          // this.onCellClick(cell)
+          this.onCellClick(event)
         // })
       })
     })
@@ -249,9 +247,9 @@ class DataGridComponent extends HTMLElement {
     }))
   }
 
-  onCellClick(cell: HTMLElement) {
+  onCellClick(event: Event) {
 
-    // const cell = (event.target as HTMLElement).closest('.cell') as HTMLElement
+    const cell = (event.target as HTMLElement).closest('.cell') as HTMLElement
 //  console.log("cell ", cell);
 
     if (cell.classList.contains('selected')) {
@@ -264,11 +262,11 @@ class DataGridComponent extends HTMLElement {
 
     cell.classList.add('selected')
 
-    const selection = this._data.items.find(i => i._id === cell.dataset.id)
+    // const selection = this._data.items.find(i => i._id === cell.dataset.id)
 
-    console.log("selecting (from onclick)... ", selection);
+    // console.log("selecting (from onclick)... ", selection);
 
-    this.dispatchEvent(new CustomEvent('selected', { detail: { selection } }))
+    // this.dispatchEvent(new CustomEvent('selected', { detail: { selection } }))
   }
 
   getColumns(): ColumnModel[] {
