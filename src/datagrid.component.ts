@@ -1,4 +1,4 @@
-console.log('Plugin Datagrid started 3')
+console.log('Plugin Datagrid started 4')
 
 import { ColumnModel, ListColumnItemModel, ListColumnItemsModel } from "@zyllio/zy-sdk";
 import { DataGridMetadata } from "./datagrid.metadata";
@@ -133,7 +133,7 @@ class DataGridComponent extends HTMLElement {
         // Delay to give a chance to unblur to select / update
 
         // setTimeout( () => {
-          this.onCellClick(event)
+        this.onCellClick(event)
         // })
       })
     })
@@ -209,17 +209,17 @@ class DataGridComponent extends HTMLElement {
 
     const columnName = cell.dataset.columnName!
 
-    this._selection[columnName] = value
-    
+    const rowId = cell.dataset.id!
+
+    const row = this._data.items.find(item => item._id === rowId)!
+
+    row[columnName] = value
+
     cell.querySelector('.text')!.textContent = value
 
-    console.log("Updating (from option click)... ", this._selection);
+    console.log("Updating (from option click)... ", row);
 
-    this.dispatchEvent(new CustomEvent('selected', { detail: { selection: this._selection } }))
-
-    this.dispatchEvent(new CustomEvent('trigger-action', {
-      detail: { action: 'update-action' }
-    }))
+    this.triggerUpdate(row)
 
     cell.classList.remove('selected')
   }
@@ -240,17 +240,23 @@ class DataGridComponent extends HTMLElement {
 
     console.log("Updating (from onblur)... ", row);
 
+    this.triggerUpdate(row)
+  }
+
+  triggerUpdate(row: ListColumnItemModel) {
+
     this.dispatchEvent(new CustomEvent('selected', { detail: { selection: row } }))
 
     this.dispatchEvent(new CustomEvent('trigger-action', {
       detail: { action: 'update-action' }
     }))
+
   }
 
   onCellClick(event: Event) {
 
     const cell = (event.target as HTMLElement).closest('.cell') as HTMLElement
-//  console.log("cell ", cell);
+    //  console.log("cell ", cell);
 
     if (cell.classList.contains('selected')) {
       return
