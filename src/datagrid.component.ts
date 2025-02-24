@@ -141,7 +141,7 @@ class DataGridComponent extends HTMLElement {
       })
 
       cell.addEventListener('blur', (event: Event) => {
-        this.onBlurClick(event)
+        this.onCellBlur(event)
       })
     })
 
@@ -218,19 +218,24 @@ class DataGridComponent extends HTMLElement {
     cell.classList.remove('selected')
   }
 
-  onBlurClick(event: Event) {
+  onCellBlur(event: Event) {
 
     const cell = (event.target as HTMLElement).closest('.cell') as HTMLElement
 
     const value = (event.target as HTMLElement).innerText
+ console.log("value ", value);
 
     const columnName = cell.dataset.columnName!
 
-    this._selection[columnName] = value
+    const rowId = cell.dataset.id!
 
-    console.log("onBlurClick updated ", this._selection);
+    const row = this._data.items.find(item => item._id === rowId)!
 
-    this.dispatchEvent(new CustomEvent('selected', { detail: { selection: this._selection } }))
+    row[columnName] = value
+
+    console.log("onBlurClick updated ", row);
+
+    this.dispatchEvent(new CustomEvent('selected', { detail: { selection: row } }))
 
     this.dispatchEvent(new CustomEvent('trigger-action', {
       detail: { action: 'update-action' }
