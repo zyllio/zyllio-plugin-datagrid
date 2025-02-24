@@ -209,6 +209,8 @@ class DataGridComponent extends HTMLElement {
     
     cell.querySelector('.text')!.textContent = value
 
+    console.log("Updating (from option click)... ", this._selection);
+
     this.dispatchEvent(new CustomEvent('selected', { detail: { selection: this._selection } }))
 
     this.dispatchEvent(new CustomEvent('trigger-action', {
@@ -223,7 +225,6 @@ class DataGridComponent extends HTMLElement {
     const cell = (event.target as HTMLElement).closest('.cell') as HTMLElement
 
     const value = (event.target as HTMLElement).innerText
- console.log("value ", value);
 
     const columnName = cell.dataset.columnName!
 
@@ -233,7 +234,7 @@ class DataGridComponent extends HTMLElement {
 
     row[columnName] = value
 
-    console.log("onBlurClick updated ", row);
+    console.log("Updating (from onblur)... ", row);
 
     this.dispatchEvent(new CustomEvent('selected', { detail: { selection: row } }))
 
@@ -250,12 +251,6 @@ class DataGridComponent extends HTMLElement {
       return
     }
 
-    const rowIndex = cell.dataset.row
-
-    const columnIndex = cell.dataset.column
-
-    console.log('Cell clicked:', { rowIndex, columnIndex });
-
     this.shadow.querySelectorAll('div[data-row]').forEach(cell => {
       cell.classList.remove('selected')
     })
@@ -263,6 +258,8 @@ class DataGridComponent extends HTMLElement {
     cell.classList.add('selected')
 
     const selection = this._data.items.find(i => i._id === cell.dataset.id)
+
+    console.log("selecting (from onclick)... ", selection);
 
     this.dispatchEvent(new CustomEvent('selected', { detail: { selection } }))
   }
