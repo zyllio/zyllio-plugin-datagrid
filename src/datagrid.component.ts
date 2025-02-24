@@ -130,6 +130,7 @@ class DataGridComponent extends HTMLElement {
     this.shadow.querySelectorAll('div[data-row]').forEach(cell => {
 
       cell.addEventListener('click', (event) => {
+        // Delay to give a chance to unblur to select / update
         setTimeout( () => {
           this.onCellClick(event)
         })
@@ -248,6 +249,7 @@ class DataGridComponent extends HTMLElement {
   onCellClick(event: Event) {
 
     const cell = (event.target as HTMLElement).closest('.cell') as HTMLElement
+ console.log("cell ", cell);
 
     if (cell.classList.contains('selected')) {
       return
